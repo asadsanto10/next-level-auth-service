@@ -2,8 +2,8 @@ import cors from 'cors';
 
 import express, { Application } from 'express';
 
+import userRoute from './app/modules/users/user.route';
 import connect from './db/connect';
-import bookRoute from './router/booksRoute/book.route';
 
 const app: Application = express();
 // server port
@@ -18,9 +18,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // route
-const routeBaseUrl = '/api/v1';
-app.use(`${routeBaseUrl}/book`, bookRoute);
-
+const base = '/api/v1';
+app.use(`${base}/users`, userRoute);
 app.listen(port, () => {
 	console.log(`Listening on port ${port}`);
 });
