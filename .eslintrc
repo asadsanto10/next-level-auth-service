@@ -36,14 +36,14 @@
 		}
 	},
 	"rules": {
-		"no-unused-vars": "off",
-		"@typescript-eslint/no-unused-vars": "warn",
+		"no-unused-vars": "warn",
 		"@typescript-eslint/no-misused-promises": "off",
-		// //////////
 		"import/prefer-default-export": 0,
-		"no-console": 0,
+		"no-console": "warn",
+		"@typescript-eslint/restrict-template-expressions": "off",
 		"no-undef": 0,
 		"no-new": 0,
+		"no-unused-expressions": "error",
 		"no-underscore-dangle": "off",
 		"import/no-extraneous-dependencies": 0,
 		"linebreak-style": "off",

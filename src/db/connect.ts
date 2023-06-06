@@ -1,12 +1,13 @@
 import mongoose from 'mongoose';
 import variable from '../config';
+import { errorlogger, logger } from '../shared/logger';
 
 const connect = async () => {
 	try {
 		await mongoose.connect(variable.dataBaseUrl as string);
-		console.log('Database connection established');
+		logger.info('Database connection established');
 	} catch (error) {
-		console.log(`Database connection: ${error as string}`);
+		errorlogger.error(`Database connection: ${error as string}`);
 	}
 };
 
