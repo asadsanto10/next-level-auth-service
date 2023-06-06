@@ -38,6 +38,7 @@
 	"rules": {
 		"no-unused-vars": "warn",
 		"@typescript-eslint/no-misused-promises": "off",
+		"@typescript-eslint/no-unsafe-argument": "off",
 		"import/prefer-default-export": 0,
 		"no-console": "warn",
 		"@typescript-eslint/restrict-template-expressions": "off",

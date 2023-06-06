@@ -2,6 +2,7 @@ import cors from 'cors';
 
 import express, { Application } from 'express';
 
+import globalErrorHandler from './app/middlewares/globalError/globalErrorHandler.middleware';
 import userRoute from './app/modules/users/user.route';
 import connect from './db/connect';
 import { logger } from './shared/logger';
@@ -19,10 +20,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // console.log(app.get('env'));
+
 // route
 const base = '/api/v1';
 
 app.use(`${base}/users`, userRoute);
+
+// global error
+app.use(globalErrorHandler);
 
 app.listen(port, () => {
 	logger.info(`Listening on port ${port}`);
