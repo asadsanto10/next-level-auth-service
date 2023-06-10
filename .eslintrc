@@ -35,6 +35,9 @@
 			}
 		}
 	},
+	"globals": {
+		"process": "readonly"
+	},
 	"rules": {
 		"no-unused-vars": "warn",
 		"@typescript-eslint/no-misused-promises": "off",

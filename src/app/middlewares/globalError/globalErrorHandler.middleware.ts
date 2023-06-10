@@ -1,14 +1,20 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { NextFunction, Request, Response } from 'express';
+import { ErrorRequestHandler } from 'express';
 import variable from '../../../config';
 import ApiError from '../../../errors/apiError';
 import validationErrorHandler from '../../../errors/validationErrorHandler';
 import { IGenericErrorMessage } from '../../../interface/error.interface';
+import { errorlogger } from '../../../shared/logger';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-const globalErrorHandler = (error: any, req: Request, res: Response, next: NextFunction) => {
-	res.status(400).json({ error });
+const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
+	// variable.nodeENV === 'production'
+	// 	? errorlogger.error(error)
+	// 	: console.log(`Global error handler:::: ${error}`);
+	errorlogger.error(error);
 
 	let statusCode = 500;
 	let message: string | null = 'something went wrong!';
@@ -46,7 +52,7 @@ const globalErrorHandler = (error: any, req: Request, res: Response, next: NextF
 		status: false,
 		message,
 		errorMessage,
-		stack: variable.nodeENV !== 'production' ? error?.stake : undefined,
+		stack: variable.nodeENV !== 'production' ? error?.stack : undefined,
 	});
 
 	next();

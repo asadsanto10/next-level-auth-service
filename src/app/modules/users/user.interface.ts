@@ -6,4 +6,4 @@ export interface IUser {
 	password: string;
 }
 
-export type UserModel = Model<IUser, object>;
+export type UserModel = Model<IUser, Record<string, unknown>>;

@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
 import variable from '../../../config';
+import { IUser } from './user.interface';
+import { User } from './user.model';
 import { generateUserId } from './user.uitls';
-import { IUser } from './users.interface';
-import { User } from './users.model';
 
 const createUser = async (userData: IUser): Promise<IUser | null> => {
 	// auto generated user id
@@ -19,6 +19,4 @@ const createUser = async (userData: IUser): Promise<IUser | null> => {
 	return user;
 };
 
-export default {
-	createUser,
-};
+export const userService = { createUser };

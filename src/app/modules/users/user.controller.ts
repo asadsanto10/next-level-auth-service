@@ -1,13 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-import { NextFunction, Request, Response } from 'express';
-import { IUser } from './users.interface';
-import userService from './users.services';
+import { RequestHandler } from 'express';
+import { IUser } from './user.interface';
+import { userService } from './user.services';
 
-export const createUser = async (
-	req: Request,
-	res: Response,
-	next: NextFunction
-): Promise<void> => {
+export const createUser: RequestHandler = async (req, res, next): Promise<void> => {
 	try {
 		const data = req.body as IUser;
 		const result = await userService.createUser(data);

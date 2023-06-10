@@ -1,18 +1,27 @@
+/* eslint-disable no-console */
 import cors from 'cors';
 
 import express, { Application } from 'express';
 
+import { Server } from 'http';
 import globalErrorHandler from './app/middlewares/globalError/globalErrorHandler.middleware';
-import userRoute from './app/modules/users/user.route';
+import { userRoutes } from './app/modules/users/user.route';
 import connect from './db/connect';
+import { sigTerm, uncaughtException, unhandledRejection } from './rejectionHandel/rejectionHandel';
 import { logger } from './shared/logger';
+
+let server: Server;
 
 const app: Application = express();
 // server port
 const port: number | string = process.env.PORT || 5005;
+
+uncaughtException();
+
 // database require
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
 connect();
+
 // parser
 app.use(cors());
 
@@ -24,11 +33,25 @@ app.use(express.json());
 // route
 const base = '/api/v1';
 
-app.use(`${base}/users`, userRoute);
+app.use(`${base}/users`, userRoutes);
+
+// Testing
+// app.get('/', (req: Request, res: Response, next: NextFunction) => {
+// await Promise.reject(new Error('unhandled request'));
+// console.log(x);
+// throw new Error('testing error logger');
+// });
 
 // global error
 app.use(globalErrorHandler);
 
-app.listen(port, () => {
+// eslint-disable-next-line prefer-const
+server = app.listen(port, () => {
 	logger.info(`Listening on port ${port}`);
 });
+
+// unhandled rejection
+unhandledRejection(server);
+
+// sigTerm detection
+sigTerm(server);
