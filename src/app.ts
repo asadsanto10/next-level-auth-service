@@ -5,8 +5,7 @@ import express, { Application } from 'express';
 
 import { Server } from 'http';
 import globalErrorHandler from './app/middlewares/globalError/globalErrorHandler.middleware';
-import { academicSemester } from './app/modules/acamedicSemester/academicSemester.route';
-import { userRoutes } from './app/modules/users/user.route';
+import router from './app/routes/router';
 import connect from './db/connect';
 import { sigTerm, uncaughtException, unhandledRejection } from './rejectionHandel/rejectionHandel';
 import { logger } from './shared/logger';
@@ -33,9 +32,7 @@ app.use(express.json());
 
 // route
 const base = '/api/v1';
-
-app.use(`${base}/users`, userRoutes);
-app.use(`${base}/academic`, academicSemester);
+app.use(base, router);
 
 // Testing
 // app.get('/', (req: Request, res: Response, next: NextFunction) => {
