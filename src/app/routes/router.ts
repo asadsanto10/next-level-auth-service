@@ -1,4 +1,5 @@
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
+import httpStatus from 'http-status';
 import { academicSemester } from '../modules/acamedicSemester/academicSemester.route';
 import { userRoutes } from '../modules/users/user.route';
 
@@ -10,5 +11,20 @@ router.get('/health', (_req, res) => {
 
 router.use('/users', userRoutes);
 router.use('/academic', academicSemester);
+
+// not found route
+router.use((req: Request, res: Response, next: NextFunction) => {
+	res.status(httpStatus.NOT_FOUND).json({
+		status: false,
+		message: 'Route not found',
+		errorMessage: [
+			{
+				path: req.originalUrl,
+				message: 'API not found!',
+			},
+		],
+	});
+	next();
+});
 
 export default router;
