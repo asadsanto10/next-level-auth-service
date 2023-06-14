@@ -26,3 +26,18 @@ export type IAcademicSemester = {
 };
 
 export type AcademicSemesterModel = Model<IAcademicSemester, Record<string, unknown>>;
+
+export interface IPageOtions {
+	page?: number;
+	limit?: number;
+	sortBy?: string;
+	sortOrder?: 'asc' | 'desc';
+}
+export interface IGenericResponse<T> {
+	data: T;
+	meta: {
+		page: number;
+		limit: number;
+		total: number;
+	};
+}

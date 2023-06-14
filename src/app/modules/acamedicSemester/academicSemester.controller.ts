@@ -1,7 +1,8 @@
 import { RequestHandler } from 'express';
 import httpStatus from 'http-status';
+import pick from '../../../shared/pick';
 import sendResponse from '../../../shared/sendResponse';
-import { IAcademicSemester } from './academicSemester.interface';
+import { IAcademicSemester, IPageOtions } from './academicSemester.interface';
 import { academicSemesterService } from './academicSemester.service';
 
 export const createAcademicSemester: RequestHandler = async (req, res, next): Promise<void> => {
@@ -10,11 +11,29 @@ export const createAcademicSemester: RequestHandler = async (req, res, next): Pr
 
 		const result = await academicSemesterService.createAcademicSemester(semesterData);
 
-		sendResponse(res, {
+		sendResponse<IAcademicSemester>(res, {
 			statusCode: httpStatus.OK,
 			status: 'success',
 			message: 'semester create successfully',
 			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const getAllSemester: RequestHandler = async (req, res, next): Promise<void> => {
+	try {
+		const pageOtions: IPageOtions = pick(req.query, ['page', 'limit', 'sortBy', 'sortOrder']);
+
+		const result = await academicSemesterService.getAllSemester(pageOtions);
+
+		sendResponse<IAcademicSemester[]>(res, {
+			statusCode: httpStatus.OK,
+			status: 'success',
+			message: 'semester fetch successfully',
+			data: result.data,
+			meta: result.meta,
 		});
 	} catch (error) {
 		next(error);
