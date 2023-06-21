@@ -29,3 +29,14 @@ export const academicSemesterTitleCodeMapper: {
 	Summer: '02',
 	Fall: '03',
 };
+
+export const paginationFiled = ['page', 'limit', 'sortBy', 'sortOrder'];
+export const academicSemesterFilterField = [
+	'searchTerm',
+	'title',
+	'code',
+	'year',
+	'startMonth',
+	'endMonth',
+];
+export const academicSemesterSearchField = ['title', 'code', 'startMonth', 'endMonth'];

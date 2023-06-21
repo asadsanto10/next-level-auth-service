@@ -2,9 +2,18 @@ import httpStatus from 'http-status';
 import { SortOrder } from 'mongoose';
 import ApiError from '../../../errors/apiError';
 import calculatePagination from '../../../helpers/pagination.helper';
-import { IAcademicSemester, IGenericResponse, IPageOtions } from './academicSemester.interface';
+
+import { IPageOtions } from '../../../interface/pagination';
+import {
+	IAcademicSemester,
+	IAcademicSemesterFilter,
+	IGenericResponse,
+} from './academicSemester.interface';
 import { AcademicSemester } from './academicSemester.model';
-import { academicSemesterTitleCodeMapper } from './academicSemester.variable';
+import {
+	academicSemesterSearchField,
+	academicSemesterTitleCodeMapper,
+} from './academicSemester.variable';
 
 const createAcademicSemester = async (data: IAcademicSemester): Promise<IAcademicSemester> => {
 	if (academicSemesterTitleCodeMapper[data.title] !== data.code) {
@@ -15,8 +24,43 @@ const createAcademicSemester = async (data: IAcademicSemester): Promise<IAcademi
 };
 
 const getAllSemester = async (
+	filters: IAcademicSemesterFilter,
 	pageOptions: IPageOtions
 ): Promise<IGenericResponse<IAcademicSemester[]>> => {
+	const { searchTerm, ...filterData } = filters;
+
+	// const andCondition = [
+	// 	{
+	// 		$or: [
+	// 			{
+	// 				title: {
+	// 					$regex: searchTerm,
+	// 					$options: 'i',
+	// 				},
+	// 			},
+	// 		],
+	// 	},
+	// ];
+
+	const andCondition = [];
+
+	if (searchTerm) {
+		andCondition.push({
+			$or: academicSemesterSearchField.map((field) => ({
+				[field]: {
+					$regex: searchTerm,
+					$options: 'i',
+				},
+			})),
+		});
+	}
+
+	if (Object.keys(filterData).length > 0) {
+		andCondition.push({
+			$and: Object.entries(filterData).map(([field, value]) => ({ [field]: value })),
+		});
+	}
+
 	const options = calculatePagination(pageOptions);
 	const page = options.page as number;
 	const limit = options.limit as number;
@@ -29,9 +73,14 @@ const getAllSemester = async (
 		sortCondition[sortBy] = sortOrder;
 	}
 
-	const result = await AcademicSemester.find().sort(sortCondition).skip(skip).limit(limit);
+	const checkCondition = andCondition.length > 0 ? { $and: andCondition } : {};
 
-	const total = await AcademicSemester.countDocuments();
+	const result = await AcademicSemester.find(checkCondition)
+		.sort(sortCondition)
+		.skip(skip)
+		.limit(limit);
+
+	const total = await AcademicSemester.countDocuments(checkCondition);
 
 	return {
 		data: result,
@@ -43,4 +92,9 @@ const getAllSemester = async (
 	};
 };
 
-export const academicSemesterService = { createAcademicSemester, getAllSemester };
+const getSemesterById = async (id: string): Promise<IAcademicSemester | null> => {
+	const result = await AcademicSemester.findById(id);
+	return result;
+};
+
+export const academicSemesterService = { createAcademicSemester, getAllSemester, getSemesterById };

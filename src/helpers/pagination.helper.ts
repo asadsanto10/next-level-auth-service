@@ -1,4 +1,4 @@
-import { IPageOtions } from '../app/modules/acamedicSemester/academicSemester.interface';
+import { IPageOtions } from '../interface/pagination';
 
 interface IPageOptionsReturn extends Partial<IPageOtions> {
 	skip?: number;
