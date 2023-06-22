@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
 import { acamedicFaculty } from '../modules/acamedicFaculty/acamedicFaculty.route';
 
+import { academicDepartment } from '../modules/academicDepartment/academicDepartment.route';
 import { academicSemester } from '../modules/acamedicSemester/academicSemester.route';
 import { userRoutes } from '../modules/users/user.route';
 
@@ -14,6 +15,7 @@ router.get('/health', (_req, res) => {
 router.use('/users', userRoutes);
 router.use('/academic', academicSemester);
 router.use('/academic', acamedicFaculty);
+router.use('/academic', academicDepartment);
 
 // not found route
 router.use((req: Request, res: Response, next: NextFunction) => {
