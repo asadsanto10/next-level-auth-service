@@ -43,7 +43,7 @@
 		"@typescript-eslint/restrict-template-expressions": "off",
 		// //////////
 		"import/prefer-default-export": 0,
-		"no-console": 0,
+		"no-console": "warn",
 		"no-undef": 0,
 		"no-new": 0,
 		"no-underscore-dangle": "off",

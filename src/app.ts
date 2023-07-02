@@ -3,6 +3,7 @@ import cors from 'cors';
 
 import express, { Application } from 'express';
 
+import cookieParser from 'cookie-parser';
 import { Server } from 'http';
 import globalErrorHandler from './app/middlewares/globalError/globalErrorHandler.middleware';
 import router from './app/routes/router';
@@ -24,6 +25,7 @@ connect();
 
 // parser
 app.use(cors());
+app.use(cookieParser());
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -40,6 +42,18 @@ app.use(base, router);
 // console.log(x);
 // throw new Error('testing error logger');
 // });
+
+// const test = async () => {
+// 	const testId = await generateStudentId({
+// 		code: '01',
+// 		year: '2025',
+// 		title: 'Autumn',
+// 		startMonth: 'January',
+// 		endMonth: 'January',
+// 	});
+// 	console.log(testId);
+// };
+// test();
 
 // global error
 app.use(globalErrorHandler);

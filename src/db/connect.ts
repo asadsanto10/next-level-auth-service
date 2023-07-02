@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import variable from '../config';
 import { errorlogger, logger } from '../shared/logger';
 
-const connect = async () => {
+const connect = async (): Promise<void> => {
 	try {
 		await mongoose.connect(variable.dataBaseUrl as string);
 		logger.info('Database connection established');
