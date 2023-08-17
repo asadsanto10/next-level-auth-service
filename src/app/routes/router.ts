@@ -4,6 +4,7 @@ import { acamedicFaculty } from '../modules/acamedicFaculty/acamedicFaculty.rout
 
 import { academicDepartment } from '../modules/academicDepartment/academicDepartment.route';
 import { academicSemester } from '../modules/acamedicSemester/academicSemester.route';
+import { studentRoutes } from '../modules/student/student.route';
 import { userRoutes } from '../modules/users/user.route';
 
 const router = express.Router();
@@ -13,9 +14,10 @@ router.get('/health', (_req, res) => {
 });
 
 router.use('/users', userRoutes);
-router.use('/academic', academicSemester);
-router.use('/academic', acamedicFaculty);
-router.use('/academic', academicDepartment);
+router.use('/students', studentRoutes);
+router.use('/academic-semester', academicSemester);
+router.use('/academic-faculties', acamedicFaculty);
+router.use('/academic-departments', academicDepartment);
 
 // not found route
 router.use((req: Request, res: Response, next: NextFunction) => {

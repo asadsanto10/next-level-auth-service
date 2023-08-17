@@ -7,8 +7,8 @@ import { userService } from './user.service';
 
 export const createUser: RequestHandler = async (req, res, next): Promise<void> => {
 	try {
-		const data = req.body as IUser;
-		const result = await userService.createUser(data);
+		const { ...userData } = req.body as IUser;
+		const result = await userService.createUser(userData);
 		// res.status(200).json({ status: 'success', data: result });
 		sendResponse(res, {
 			statusCode: httpStatus.OK,

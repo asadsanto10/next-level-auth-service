@@ -2,12 +2,16 @@
 import variable from '../../../config';
 import { IUser } from './user.interface';
 import { User } from './user.model';
-import { generateUserId } from './user.uitls';
+import { generateStudentId } from './user.uitls';
 
 const createUser = async (userData: IUser): Promise<IUser | null> => {
 	// auto generated user id
-	const currentId = await generateUserId();
-	userData.id = currentId;
+	const academicSemester = {
+		code: '01',
+		year: '2025',
+	};
+	const currentId = await generateStudentId(academicSemester);
+	userData.id = currentId as string;
 
 	if (!userData.password) {
 		userData.password = variable.defaultStudentPassword as string;
