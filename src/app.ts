@@ -7,7 +7,6 @@ import cookieParser from 'cookie-parser';
 import { Server } from 'http';
 import globalErrorHandler from './app/middlewares/globalError/globalErrorHandler.middleware';
 import router from './app/routes/router';
-import connect from './db/connect';
 import { sigTerm, uncaughtException, unhandledRejection } from './rejectionHandel/rejectionHandel';
 import { logger } from './shared/logger';
 
@@ -20,7 +19,7 @@ const port: number | string = process.env.PORT || 5005;
 uncaughtException();
 
 // database require
-connect();
+// connect();
 
 // parser
 app.use(cors());
