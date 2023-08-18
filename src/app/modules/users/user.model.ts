@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
 import { IUser, UserModel } from './user.interface';
 
-const userSchema = new Schema<IUser>(
+const UserSchema = new Schema<IUser>(
 	{
 		id: { type: 'string', required: true, unique: true },
 		password: { type: 'string', required: true },
@@ -22,4 +22,4 @@ const userSchema = new Schema<IUser>(
 	{ timestamps: true, virtuals: true }
 );
 
-export const User = model<IUser, UserModel>('Users', userSchema);
+export const User = model<IUser, UserModel>('Users', UserSchema);

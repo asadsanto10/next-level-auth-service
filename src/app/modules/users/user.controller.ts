@@ -21,3 +21,19 @@ export const createStudent: RequestHandler = async (req, res, next): Promise<voi
 		next(error);
 	}
 };
+
+export const createFaculty: RequestHandler = async (req, res, next): Promise<void> => {
+	try {
+		// const { faculty, ...userData } = req.body;
+		// const result = await userService.createFaculty(faculty, userData);
+		// // res.status(200).json({ status: 'success', data: result });
+		// sendResponse(res, {
+		// 	statusCode: httpStatus.OK,
+		// 	status: 'success',
+		// 	message: 'faculty create successfully',
+		// 	data: result,
+		// });
+	} catch (error) {
+		next(error);
+	}
+};

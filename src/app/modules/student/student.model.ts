@@ -3,7 +3,7 @@ import { Schema, model } from 'mongoose';
 import { IStudent, StudentModel } from './student.interface';
 import { bloodGroup, gender } from './student.variable';
 
-export const studentSchema = new Schema<IStudent, StudentModel>(
+export const StudentSchema = new Schema<IStudent, StudentModel>(
 	{
 		id: {
 			type: String,
@@ -142,4 +142,4 @@ export const studentSchema = new Schema<IStudent, StudentModel>(
 	}
 );
 
-export const Student = model<IStudent, StudentModel>('Student', studentSchema);
+export const Student = model<IStudent, StudentModel>('Student', StudentSchema);
