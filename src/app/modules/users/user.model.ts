@@ -23,4 +23,10 @@ const UserSchema = new Schema<IUser>(
 	{ timestamps: true, virtuals: true }
 );
 
+// UserSchema.pre('save', async function (next) {
+// 	// hashing user password
+// 	this.password = await bcrypt.hash(this.password, Number(variable.bycryptSaltRounds));
+// 	next();
+// });
+
 export const User = model<IUser, UserModel>('Users', UserSchema);
