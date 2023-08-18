@@ -10,6 +10,7 @@ const variable = {
 	defaultStudentPassword: process.env.DEFAULT_STUDENT_PASSWORD,
 	defaultFacultyPassword: process.env.DEFAULT_FACULTY_PASSWORD,
 	defaultAdminPassword: process.env.DEFAULT_ADMIN_PASSWORD,
+	bycryptSaltRounds: process.env.BCRYPT_SALT_ROUNDS,
 };
 
 export default variable;

@@ -135,12 +135,13 @@ const deleteStudent = async (id: string): Promise<IStudent | null> => {
 		}
 		// delete user
 		await User.deleteOne({ id });
-		session.commitTransaction();
-		session.endSession();
+		await session.commitTransaction();
+		await session.endSession();
 
 		return student;
 	} catch (error) {
-		session.abortTransaction();
+		await session.abortTransaction();
+		await session.endSession();
 		throw error;
 	}
 };
