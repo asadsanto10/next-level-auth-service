@@ -1,6 +1,6 @@
 import express from 'express';
 import { validateRequest } from '../../middlewares/validateRequest/validateRequest';
-import { createStudent } from './user.controller';
+import { createFaculty, createStudent } from './user.controller';
 import { userValidation } from './user.validation';
 
 const router = express.Router();
@@ -12,8 +12,8 @@ router.post(
 );
 router.post(
 	'/create-faculty',
-	validateRequest(userValidation.createStudentZodSchema),
-	createStudent
+	validateRequest(userValidation.createFacultyZodSchema),
+	createFaculty
 );
 
 export const userRoutes = router;

@@ -8,6 +8,8 @@ const variable = {
 	port: process.env.PORT,
 	dataBaseUrl: process.env.DATABASE_URL,
 	defaultStudentPassword: process.env.DEFAULT_STUDENT_PASSWORD,
+	defaultFacultyPassword: process.env.DEFAULT_FACULTY_PASSWORD,
+	defaultAdminPassword: process.env.DEFAULT_ADMIN_PASSWORD,
 };
 
 export default variable;
