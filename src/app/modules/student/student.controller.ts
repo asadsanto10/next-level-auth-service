@@ -24,6 +24,7 @@ export const getAllStudents: RequestHandler = async (req, res, next): Promise<vo
 		next(error);
 	}
 };
+
 export const getSingleStudent: RequestHandler = async (req, res, next): Promise<void> => {
 	try {
 		const { id } = req.params;

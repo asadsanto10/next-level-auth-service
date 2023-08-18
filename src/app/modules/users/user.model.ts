@@ -10,14 +10,14 @@ const UserSchema = new Schema<IUser>(
 			type: Schema.Types.ObjectId,
 			ref: 'Student',
 		},
-		// faculty: {
-		// 	type: Schema.Types.ObjectId,
-		// 	ref: 'Faculty',
-		// },
-		// admin: {
-		// 	type: Schema.Types.ObjectId,
-		// 	ref: 'Admin',
-		// },
+		faculty: {
+			type: Schema.Types.ObjectId,
+			ref: 'Faculty',
+		},
+		admin: {
+			type: Schema.Types.ObjectId,
+			ref: 'Admin',
+		},
 	},
 	{ timestamps: true, virtuals: true }
 );
