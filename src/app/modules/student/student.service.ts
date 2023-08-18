@@ -1,4 +1,6 @@
+import httpStatus from 'http-status';
 import { SortOrder } from 'mongoose';
+import ApiError from '../../../errors/apiError';
 import calculatePagination from '../../../helpers/pagination.helper';
 import { IGenericResponse } from '../../../interface/common';
 import { IPageOtions } from '../../../interface/pagination';
@@ -45,7 +47,13 @@ const getAllStudents = async (
 
   const checkCondition = andCondition.length > 0 ? { $and: andCondition } : {};
 
-  const result = await Student.find(checkCondition).sort(sortCondition).skip(skip).limit(limit);
+  const result = await Student.find(checkCondition)
+    .populate('academicSemester')
+    .populate('academicDepartment')
+    .populate('academicFaculty')
+    .sort(sortCondition)
+    .skip(skip)
+    .limit(limit);
 
   const total = await Student.countDocuments(checkCondition);
 
@@ -67,20 +75,54 @@ const getSingleStudent = async (id: string): Promise<IStudent | null> => {
   return result;
 };
 
-// const updateStudent = async (
-// 	id: string,
-// 	updatedData: Partial<IStudent>
-// ): Promise<IStudent | null> => {
-// 	const result = await Student.findOneAndUpdate({ _id: id }, updatedData, { new: true });
+const updateStudent = async (
+  id: string,
+  updatedData: Partial<IStudent>
+): Promise<IStudent | null> => {
+  const isExist = Student.findOne({ id });
 
-// 	return result;
-// };
+  if (!isExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Student not found');
+  }
 
-// const deleteStudent = async (id: string): Promise<IStudent | null> => {
-// 	const result = await Student.findByIdAndDelete(id);
+  const { name, guardian, localGuardian, ...studentData } = updatedData;
 
-// 	return result;
-// };
+  const updatedStudentData: Partial<IStudent> = { ...studentData };
 
-export const studentService = { getAllStudents, getSingleStudent };
-// updateStudent, deleteStudent
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const getUpdayeKeyAndValue = (filed: any, fieldName: string): void => {
+    Object.keys(filed).forEach((key) => {
+      const nameKey = `${fieldName}.${key}`;
+      const value = filed[key as keyof typeof filed];
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (updatedStudentData as any)[nameKey] = value;
+    });
+  };
+
+  if (name && Object.keys(name).length > 0) {
+    getUpdayeKeyAndValue(name, 'name');
+  }
+
+  if (guardian && Object.keys(guardian).length > 0) {
+    getUpdayeKeyAndValue(guardian, 'guardian');
+  }
+
+  if (localGuardian && Object.keys(localGuardian).length > 0) {
+    getUpdayeKeyAndValue(localGuardian, 'localGuardian');
+  }
+
+  const result = await Student.findOneAndUpdate({ id }, updatedStudentData, { new: true });
+
+  return result;
+};
+
+const deleteStudent = async (id: string): Promise<IStudent | null> => {
+  const result = await Student.findByIdAndDelete(id)
+    .populate('academicSemester')
+    .populate('academicDepartment')
+    .populate('academicFaculty');
+
+  return result;
+};
+
+export const studentService = { getAllStudents, getSingleStudent, updateStudent, deleteStudent };

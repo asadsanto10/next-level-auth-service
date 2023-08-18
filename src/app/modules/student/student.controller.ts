@@ -41,37 +41,37 @@ export const getSingleStudent: RequestHandler = async (req, res, next): Promise<
   }
 };
 
-// export const updateStudent: RequestHandler = async (req, res, next): Promise<void> => {
-// 	try {
-// 		const { id } = req.params;
-// 		const updatedData = req.body;
+export const updateStudent: RequestHandler = async (req, res, next): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const updatedData = req.body;
 
-// 		const result = await studentService.updateStudent(id, updatedData);
+    const result = await studentService.updateStudent(id, updatedData);
 
-// 		sendResponse<IStudent>(res, {
-// 			statusCode: httpStatus.OK,
-// 			status: 'success',
-// 			message: 'student updated successfully',
-// 			data: result,
-// 		});
-// 	} catch (error) {
-// 		next(error);
-// 	}
-// };
+    sendResponse<IStudent>(res, {
+      statusCode: httpStatus.OK,
+      status: 'success',
+      message: 'student updated successfully',
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
-// export const deleteStudent: RequestHandler = async (req, res, next): Promise<void> => {
-// 	try {
-// 		const { id } = req.params;
+export const deleteStudent: RequestHandler = async (req, res, next): Promise<void> => {
+  try {
+    const { id } = req.params;
 
-// 		const result = await studentService.deleteStudent(id);
+    const result = await studentService.deleteStudent(id);
 
-// 		sendResponse<IStudent>(res, {
-// 			statusCode: httpStatus.OK,
-// 			status: 'success',
-// 			message: 'student deleted successfully',
-// 			data: result,
-// 		});
-// 	} catch (error) {
-// 		next(error);
-// 	}
-// };
+    sendResponse<IStudent>(res, {
+      statusCode: httpStatus.OK,
+      status: 'success',
+      message: 'student deleted successfully',
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
