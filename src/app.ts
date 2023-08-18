@@ -20,7 +20,6 @@ const port: number | string = process.env.PORT || 5005;
 uncaughtException();
 
 // database require
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
 connect();
 
 // parser
