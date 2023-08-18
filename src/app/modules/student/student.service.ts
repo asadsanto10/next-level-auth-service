@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import httpStatus from 'http-status';
 import { SortOrder } from 'mongoose';
 import ApiError from '../../../errors/apiError';
@@ -89,12 +90,10 @@ const updateStudent = async (
 
 	const updatedStudentData: Partial<IStudent> = { ...studentData };
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const getUpdayeKeyAndValue = (filed: any, fieldName: string): void => {
 		Object.keys(filed).forEach((key) => {
 			const nameKey = `${fieldName}.${key}`;
 			const value = filed[key as keyof typeof filed];
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			(updatedStudentData as any)[nameKey] = value;
 		});
 	};
