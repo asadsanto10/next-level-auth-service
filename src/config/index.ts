@@ -11,6 +11,10 @@ const variable = {
 	defaultFacultyPassword: process.env.DEFAULT_FACULTY_PASSWORD,
 	defaultAdminPassword: process.env.DEFAULT_ADMIN_PASSWORD,
 	bycryptSaltRounds: process.env.BCRYPT_SALT_ROUNDS,
+	jwtSecret: process.env.JWT_SECRET,
+	jwtExpireTime: process.env.JWT_EXPIRES_IN,
+	jwtRefreshSecret: process.env.JWT_REFRESH_SECRET,
+	jwtRefreshExpireTime: process.env.JWT_REFRESH_EXPIRES_IN,
 };
 
 export default variable;
