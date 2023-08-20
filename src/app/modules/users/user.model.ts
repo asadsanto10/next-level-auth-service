@@ -25,14 +25,21 @@ const UserSchema = new Schema<IUser, UserModel>(
 			type: Boolean,
 			default: true,
 		},
+		passwordChangedAt: {
+			type: Date,
+		},
 	},
 	{ timestamps: true, virtuals: true }
 );
 
 UserSchema.pre('save', async function (next) {
 	// hashing user password
-
 	this.password = await bcrypt.hash(this.password, Number(variable.bycryptSaltRounds));
+
+	if (!this.needsPasswordChange) {
+		this.passwordChangedAt = new Date();
+	}
+
 	next();
 });
 
