@@ -1,8 +1,14 @@
 import { RequestHandler } from 'express';
 import httpStatus from 'http-status';
+import { JwtPayload } from 'jsonwebtoken';
 import variable from '../../../config';
 import sendResponse from '../../../shared/sendResponse';
-import { ILoginUser, ILoginUserResponse, IRefreshTokenResponse } from './auth.interface';
+import {
+	IChangePasswordResponse,
+	ILoginUser,
+	ILoginUserResponse,
+	IRefreshTokenResponse,
+} from './auth.interface';
 import { authService } from './auth.service';
 
 export const loginUser: RequestHandler = async (req, res, next): Promise<void> => {
@@ -48,6 +54,22 @@ export const getRefreshToken: RequestHandler = async (req, res, next): Promise<v
 			status: 'success',
 			message: 'user login successfully',
 			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const changePassword: RequestHandler = async (req, res, next): Promise<void> => {
+	try {
+		const { user } = req;
+		const { ...passwordData } = req.body;
+		await authService.changePassword(user as JwtPayload, passwordData);
+
+		sendResponse<IChangePasswordResponse>(res, {
+			statusCode: httpStatus.OK,
+			status: 'success',
+			message: 'Password changed successfully',
 		});
 	} catch (error) {
 		next(error);
