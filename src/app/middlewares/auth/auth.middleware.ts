@@ -1,17 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
-import { JwtPayload, Secret } from 'jsonwebtoken';
+import { Secret } from 'jsonwebtoken';
 import variable from '../../../config';
 import ApiError from '../../../errors/apiError';
 import { verifyToken } from '../../../helpers/jwt.herlpers';
 
-export interface AuthRequest extends Request {
-	user: JwtPayload;
-}
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const auth = (...role: string[]): any => {
-	return async (req: AuthRequest, _res: Response, next: NextFunction): Promise<void> => {
+	return async (req: Request, _res: Response, next: NextFunction): Promise<void> => {
 		try {
 			// get authorization token
 			const authToken = req.headers.authorization;
