@@ -4,6 +4,10 @@ import { acamedicFaculty } from '../modules/acamedicFaculty/acamedicFaculty.rout
 
 import { academicDepartment } from '../modules/academicDepartment/academicDepartment.route';
 import { academicSemester } from '../modules/acamedicSemester/academicSemester.route';
+import { adminRoutes } from '../modules/admin/admin.route';
+import { authRoutes } from '../modules/auth/auth.route';
+import { facultyRoutes } from '../modules/faculty/faculty.route';
+import { managementDepartmentRoutes } from '../modules/managementDepartment/managementDepartment.route';
 import { studentRoutes } from '../modules/student/student.route';
 import { userRoutes } from '../modules/users/user.route';
 
@@ -18,6 +22,10 @@ router.use('/students', studentRoutes);
 router.use('/academic-semester', academicSemester);
 router.use('/academic-faculties', acamedicFaculty);
 router.use('/academic-departments', academicDepartment);
+router.use('/management-departments', managementDepartmentRoutes);
+router.use('/faculties', facultyRoutes);
+router.use('/admins', adminRoutes);
+router.use('/auth', authRoutes);
 
 // not found route
 router.use((req: Request, res: Response, next: NextFunction) => {

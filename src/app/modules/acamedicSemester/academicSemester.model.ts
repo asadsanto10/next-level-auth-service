@@ -8,7 +8,7 @@ import {
 	academicSemesterTitle,
 } from './academicSemester.variable';
 
-const academicSemesterSchema = new Schema<IAcademicSemester>(
+const AcademicSemesterSchema = new Schema<IAcademicSemester>(
 	{
 		title: { type: 'string', required: true, enum: academicSemesterTitle },
 		year: { type: 'string', required: true },
@@ -21,7 +21,7 @@ const academicSemesterSchema = new Schema<IAcademicSemester>(
 
 // ?? handleing same year and same semester issue
 // eslint-disable-next-line func-names
-academicSemesterSchema.pre('save', async function (next) {
+AcademicSemesterSchema.pre('save', async function (next) {
 	const isExist = await this.$model('AcademicSemester').findOne({
 		title: this.title,
 		year: this.year,
@@ -34,5 +34,5 @@ academicSemesterSchema.pre('save', async function (next) {
 
 export const AcademicSemester = model<IAcademicSemester, AcademicSemesterModel>(
 	'AcademicSemester',
-	academicSemesterSchema
+	AcademicSemesterSchema
 );
